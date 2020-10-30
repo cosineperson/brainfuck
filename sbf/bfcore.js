@@ -30,6 +30,7 @@ exports.run = function(code,mem,ch)
 			break
 		default:
 			console.log("o")
+            //todo
 		}
 		ctrstr ++
 		if (ctrstr >= code.length) break
