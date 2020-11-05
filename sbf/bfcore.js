@@ -1,7 +1,10 @@
-exports.run = function(code,mem,ch)
+const find = require("./connct_finder.js").finder
+exports.run = function(code,mem=[])
 {
-	var place = 0 //指针位置
-	var ctrstr = 0 //控制流
+	//code is a string
+	let place = 0 //指针位置
+	let ctrstr = 0 //控制流
+	const ctrarr = find(code)
 	while (1)
 	{
 		var codechar = code[ctrstr]
@@ -11,12 +14,12 @@ exports.run = function(code,mem,ch)
 		switch (codechar.toString())
 		{
 		case "+":
-			mem[place]++
+			mem[place] += 1
 			break
 		case "-":
-			if(place > 0)
+			if(mem[place] > 0)
 			{
-				mem[place]--
+				mem[place] -= 1
 			}
 			break
 		case ".":
@@ -28,9 +31,18 @@ exports.run = function(code,mem,ch)
 		case "<":
 			place--
 			break
-		default:
-			console.log("o")
-            //todo
+		case "[":
+			if (mem[place] == 0)
+			{
+				ctrstr = ctrarr[ctrstr]
+			}
+			break
+      case "]":
+			if (mem[place] != 0)
+			{
+				ctrstr = ctrarr[ctrstr]
+			}
+			break
 		}
 		ctrstr ++
 		if (ctrstr >= code.length) break
