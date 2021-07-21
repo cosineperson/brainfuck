@@ -2,8 +2,8 @@ const find = require("./connct_finder.js").finder
 exports.run = function(code,mem=[0],input=[],extra={max:64})
 {
 	//code is a string
-	let place = 0 //指针位置
-	let ctrstr = 0 //控制流
+	let place = 0 //control the place of the pointer~
+	let ctrstr = 0 //control the stream
 	let rst = []
 	const ctrarr = find(code)
 	while (1)
@@ -53,3 +53,4 @@ exports.run = function(code,mem=[0],input=[],extra={max:64})
 	}
 	return rst
 }
+
