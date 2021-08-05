@@ -1,11 +1,14 @@
 const find = require("./connct_finder.js").finder
-exports.run = function(code,mem=[0],input=[],extra={max:64})
+exports.run = run
+function run(code,mem=[0],input=[],extra={max:64})
 {
 	//code is a string
-	let place = 0 //control the place of the pointer~
-	let ctrstr = 0 //control the stream
+	//place control the place of the pointer~
+	//ctrstr control the stream
 	let rst = []
 	const ctrarr = find(code)
+	let ctrstr=0
+	let place=0
 	while (1)
 	{
 		var codechar = code[ctrstr]
@@ -15,12 +18,7 @@ exports.run = function(code,mem=[0],input=[],extra={max:64})
 				mem[place] += 1
 				break
 			case "-":
-				if(mem[place] > 0)
-				{
-					mem[place] -= 1
-				} else {
-					mem[place] = extra.max
-				}
+				mem[place] -= 1
 				break
 			case ".":
 				rst.push(mem[place])
@@ -47,10 +45,11 @@ exports.run = function(code,mem=[0],input=[],extra={max:64})
 					ctrstr = ctrarr[ctrstr]
 				}
 				break
+			default:
+				break
 		}
 		ctrstr ++
 		if (ctrstr >= code.length) break
 	}
-	return rst
+	return [rst,mem]
 }
-
