@@ -9,7 +9,7 @@ class Code {
         if (typeof findResult == "number") {
             // find return NaN, not in pairs
             this.notAvailble = "not in pairs";
-        } else {
+} else {
             // alright
             this.matchBrancketsList = find(this.code);
             this.notAvailble = false;
@@ -76,7 +76,6 @@ class State {
             return NaN;
         } else {
             switch (codechar) {
-                // @todo
                 case "+":
                     this.memoryChange((x) => x + 1);
                     break;
@@ -122,7 +121,7 @@ exports.run = function (code, input = [0], times = Infinity) {
     return res;
 };
 
-// old
+// old version
 //exports.oldRun = oldRun;
 //function oldRun(code, mem = [0], input = [], extra = { max: 64 }) {
 //    //code is a string

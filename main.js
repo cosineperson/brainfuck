@@ -9,3 +9,4 @@
     * console.log(rst,mem)
 */
 const thecore = require('./bfcore')
+
