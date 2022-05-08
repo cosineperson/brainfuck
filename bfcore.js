@@ -109,7 +109,7 @@ class State {
 exports.Code = Code;
 exports.State = State;
 exports.run = function (code, input = [0], times = Infinity) {
-    let myState = new State(memory);
+    let myState = new State([0]);
     let myCode = new Code(code);
     let inputs = input;
     let res = [];
