@@ -8,5 +8,6 @@
     * let [rst,mem] = thecore.run(code,[2,8,9])
     * console.log(rst,mem)
 */
-const thecore = require('./bfcore')
-
+// const thecore = require('./bfcore')
+// TODO
+import * as core from "./bfcore.js"

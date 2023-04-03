@@ -1,4 +1,4 @@
-const find = require("./pairs_finder.js").finder;
+import {findPairs as find} from "pairs_finder.js"
 
 class Code {
     constructor(code) {
@@ -9,7 +9,7 @@ class Code {
         if (typeof findResult == "number") {
             // find return NaN, not in pairs
             this.notAvailble = "not in pairs";
-} else {
+        } else {
             // alright
             this.matchBrancketsList = find(this.code);
             this.notAvailble = false;
@@ -67,57 +67,80 @@ class State {
         let pointer = this.pointer;
         this.memoryplace[pointer] = method(this.memoryplace[pointer]);
     }
-    runOnce(code, input) {
-        // @param {Code} code
-        let output = 0;
-        // @param Number output
-        let codechar = code.returnCodeChar();
-        if (code.notAvailble) {
-            return NaN;
-        } else {
-            switch (codechar) {
-                case "+":
-                    this.memoryChange((x) => x + 1);
-                    break;
-                case "-":
-                    this.memoryChange((x) => x - 1);
-                    break;
-                case ".":
-                    output = this.memoryFetch();
-                    break;
-                case ",":
-                    this.memoryWrite(input.shift());
-                    break;
-                case ">":
-                    this.pointerNext();
-                    break;
-                case "<":
-                    this.pointerBack();
-                    break;
-                case "[":
-                    // do nothing
-                    break;
-                case "]":
-                    if (this.memoryFetch() == 0) {
-                    } else code.brShift();
-                    break;
-            }
-            return code.commandNext() ? output : NaN;
+}
+
+function runOnce(code,state,input) {
+    // @param {Code} code
+    let output = 0;
+    // @param Number output
+    let codechar = code.returnCodeChar();
+    if (code.notAvailble) {
+        return NaN;
+    } else {
+        switch (codechar) {
+            case "+":
+                state.memoryChange((x) => x + 1);
+                break;
+            case "-":
+                state.memoryChange((x) => x - 1);
+                break;
+            case ".":
+                output = state.memoryFetch();
+                break;
+            case ",":
+                state.memoryWrite(input);
+                break;
+            case ">":
+                state.pointerNext();
+                break;
+            case "<":
+                state.pointerBack();
+                break;
+            case "[":
+                // do nothing
+                break;
+            case "]":
+                if (state.memoryFetch() != 0) code.brShift()
+                break;
         }
+        return code.commandNext() ? output : NaN;
     }
 }
-exports.Code = Code;
-exports.State = State;
-exports.run = function (code, input = [0], times = Infinity) {
-    let myState = new State([0]);
-    let myCode = new Code(code);
-    let inputs = input;
-    let res = [];
-    for (let i = 0; i < times; i++) {
-        let returning = myState.runOnce(myCode, inputs);
-        if (isNaN(returning)) break;
-        else res.push(returning);
+class BrainfuckMachine {
+    constructor(evaler=runOnce) {
+        this.state = new State([0])
+        this.evaler = evaler
     }
-    return res;
-};
+    feed(code) {
+        this.code = new Code(code)
+    }
+    rm_rf() {
+        const old = this.state
+        this.state = new State([0])
+        return old
+    }
+    run(inputs=[0],times=Infinity) {
+        let inputStream = inputs;
+        let res = [];
+        for (let i = 0; i < times; i++) {
+            let returning = this.evaler(this.code,this.state, inputStream.shift());
+            if (isNaN(returning)) break;
+            else res.push(returning);
+        }
+        return res;
+    }
+    runOnce(input) {
+        return this.evaler(this.code,this.state,input)
+    }
+}
+
+export {State,Code,BrainfuckMachine,runOnce}
+
+// for quickjs
+// print(run("+++[-.]"))
+
+let bf1 = new BrainfuckMachine()
+bf1.feed(",[-.]+.")
+print(bf1.runOnce(10))
+print(bf1.run())
 

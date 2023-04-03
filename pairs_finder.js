@@ -1,4 +1,3 @@
-exports.finder = findPairs;
 function findPairs(array) {
     /**
      * @param {Function} finder
@@ -35,3 +34,4 @@ function findPairs(array) {
 }
 // test
 // console.log(find('[a[]]'))
+export {findPairs}
