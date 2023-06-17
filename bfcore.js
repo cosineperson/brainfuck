@@ -162,8 +162,8 @@ class BrainfuckMachine {
 
     this.pipein = this.io.stdinput.pipein
   }
-  feed(code) {
-    this.code = new Code(code)
+  feed(codestr) {
+    this.code = new Code(codestr)
   }
   rm_rf() {
     const old = this.memory
@@ -194,13 +194,10 @@ class BrainfuckMachine {
 
 
 // for quickjs
-// print(run("+++[-.]"))
+//let bf1 = new BrainfuckMachine()
+//bf1.feed(",[-.].")
+//bf1.input(10)
+//bf1.run()
+//bf1.io.display()
 //TODO
-let bf1 = new BrainfuckMachine()
-bf1.feed(",[-.]+.")
-bf1.input(10)
-print(bf1.io.stdinput.memory[0])
-bf1.run(12)
-bf1.io.display()
-bf1.run(50)
-bf1.io.display()
+export {BrainfuckMachine,Syntax,ioState,memoryState}
