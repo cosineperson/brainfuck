@@ -11,3 +11,7 @@
 // const thecore = require('./bfcore')
 // TODO
 import * as core from "./bfcore.js"
+import * as os from "os"
+
+
+
