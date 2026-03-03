@@ -1,5 +1,3 @@
 # brainfuck
-## A project which aims at brainfuck.
-### general usage
 
-
+legacy code, a brainfuck intepreter written in js.
